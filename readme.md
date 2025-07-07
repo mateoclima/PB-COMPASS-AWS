@@ -1,6 +1,6 @@
 # Projeto: Servidor Web com Monitoramento e Alertas na AWS
 
-Este repositório documenta e fornece os scripts para o projeto final da disciplina de Linux do Programa de Bolsas DevSecOps. O objetivo principal é implantar um ambiente web robusto na nuvem da AWS, configurar monitoramento contínuo para sua disponibilidade e automatizar o envio de alertas em caso de falha.
+Este repositório documenta e fornece os scripts realizados durante o projeto Linux do Programa de Bolsas DevSecOps. O objetivo principal é implantar um ambiente web robusto na nuvem da AWS, configurar monitoramento contínuo para sua disponibilidade e automatizar o envio de alertas em caso de falha.
 
 ## 🚀 Tecnologias Utilizadas
 
