@@ -1,6 +1,6 @@
 # Projeto: Servidor Web com Monitoramento e Alertas na AWS
 
-Este repositório documenta e fornece os scripts para o projeto final da disciplina de Linux do Programa de Bolsas DevSecOps. O objetivo principal é implantar um ambiente web robusto na nuvem da AWS, configurar monitoramento contínuo para sua disponibilidade e automatizar o envio de alertas em caso de falhas.
+Este repositório documenta e fornece os scripts para o projeto final da disciplina de Linux do Programa de Bolsas DevSecOps. O objetivo principal é implantar um ambiente web robusto na nuvem da AWS, configurar monitoramento contínuo para sua disponibilidade e automatizar o envio de alertas em caso de falha.
 
 ## 🚀 Tecnologias Utilizadas
 
@@ -160,7 +160,7 @@ Este arquivo armazenará variáveis de ambiente sensíveis, como o webhook do Di
 1.  **Crie o arquivo de configuração:**
 
     ```bash
-    sudo nano /root/projeto/config.sh
+    sudo nano /caminho/para/config.sh # Caminho atualizado
     ```
 
 2.  **Adicione suas variáveis de ambiente ao arquivo `config.sh`**. Exemplo:
@@ -179,7 +179,7 @@ Este arquivo armazenará variáveis de ambiente sensíveis, como o webhook do Di
     *   É crucial restringir as permissões deste arquivo para que apenas o proprietário (root) possa lê-lo e escrevê-lo, garantindo a segurança das informações sensíveis.
 
     ```bash
-    sudo chmod 600 /root/projeto/config.sh
+    sudo chmod 600 /caminho/para/config.sh # Caminho atualizado
     ```
 
 #### 3.3. Agendamento com Cron
@@ -208,9 +208,7 @@ A lógica do script pode ser dividida nas seguintes partes:
 
   *   **1. Inclusão do Arquivo de Configuração (`config.sh`):**
 
-      *   No início, o script tenta incluir o arquivo `config.sh` (localizado em `/root/projeto/config.sh`).
-      *   Este arquivo é crucial, pois contém variáveis sensíveis como a URL do webhook do Discord (`DISCORD_WEBHOOK_URL`), o caminho do arquivo de log (`LOG_FILE`) e a URL do site a ser monitorado (`SITE_URL`).
-      *   Se o `config.sh` não for encontrado ou acessível, o script exibirá uma mensagem de erro e será encerrado, pois não poderá operar sem as configurações necessárias.
+      *   No início, o script tenta incluir o arquivo `config.sh` (localizado em `/caminho/para/config.sh` - *atenção: este é um placeholder e deve ser substituído pelo caminho real onde você salvará o arquivo*). Este arquivo é crucial, pois contém variáveis sensíveis como a URL do webhook do Discord (`DISCORD_WEBHOOK_URL`), o caminho do arquivo de log (`LOG_FILE`) e a URL do site a ser monitorado (`SITE_URL`). Se o `config.sh` não for encontrado ou acessível, o script exibirá uma mensagem de erro e será encerrado, pois não poderá operar sem as configurações necessárias.
 
   *   **2. Variáveis de Configuração Internas:**
 
@@ -218,17 +216,14 @@ A lógica do script pode ser dividida nas seguintes partes:
 
   *   **3. Funções Auxiliares:**
 
-      *   **`log_message(TYPE, MESSAGE)`:** Esta função é responsável por registrar eventos no arquivo de log especificado em `config.sh`.
-          *   Ela formata cada entrada com um timestamp, o tipo da mensagem (ex: "INFO", "ALERTA") e o conteúdo da mensagem.
-          *   Utiliza `sudo tee -a` para garantir que a mensagem seja adicionada ao final do arquivo de log, mesmo que o script seja executado como um usuário que não tenha permissões diretas de escrita no diretório do log (como `/var/log`).
-      *   **`send_discord_notification(MESSAGE)`:** Esta função é encarregada de enviar as mensagens de alerta para o Discord.
-          *   Primeiro, verifica se a `DISCORD_WEBHOOK_URL` está configurada. Se não estiver, registra um erro e não tenta enviar a notificação.
-          *   Usa o comando `curl` para fazer uma requisição HTTP POST para a URL do webhook do Discord.
-          *   O corpo da requisição é um JSON que inclui um `username` (o nome do bot que aparece no Discord) e o `content` (o texto da notificação).
+      *   **`log_message(TYPE, MESSAGE)`:** Esta função é responsável por registrar eventos no arquivo de log especificado em `config.sh`. Ela formata cada entrada com um timestamp, o tipo da mensagem (ex: "INFO", "ALERTA") e o conteúdo da mensagem. Utiliza `sudo tee -a` para garantir que a mensagem seja adicionada ao final do arquivo de log, mesmo que o script seja executado como um usuário que não tenha permissões diretas de escrita no diretório do log (como `/var/log`).
+
+      *   **`send_discord_notification(MESSAGE)`:** Esta função é encarregada de enviar as mensagens de alerta para o Discord. Primeiro, verifica se a `DISCORD_WEBHOOK_URL` está configurada. Se não estiver, registra um erro e não tenta enviar a notificação. Usa o comando `curl` para fazer uma requisição HTTP POST para a URL do webhook do Discord. O corpo da requisição é um JSON que inclui um `username` (o nome do bot que aparece no Discord) e o `content` (o texto da notificação).
 
   *   **4. Lógica Principal de Monitoramento:**
 
-      *   O script utiliza `curl` para tentar acessar a `SITE_URL` (definida em `config.sh`).
+      *   O script utiliza `curl` para tentar acessar a `SITE_URL` (definida em `config.sh`) e obter o código de status HTTP.
+
       *   `curl -o /dev/null -s -w "%{http_code}" "$SITE_URL"`: Este comando tenta acessar a URL.
           *   `-o /dev/null`: Descarta o corpo da resposta HTTP (não precisamos do conteúdo da página).
           *   `-s`: Executa o `curl` em modo silencioso.
